@@ -28,7 +28,13 @@ const tourSchema = new mongoose.Schema({
     required: [true, 'A tour must have a price']
   }
 });
-const Tour = mongoose.model('Tour', tourSchema)
+const Tour = mongoose.model('Tour', tourSchema);
+
+const testTour = new Tour({
+  name: "The Testing the hiker",
+  price: 500,
+  rating: 4.6
+})
 
 const app = require('./app');
 
