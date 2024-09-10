@@ -4,12 +4,16 @@ const Tour = require('../models/tourModel');
 //   fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
 // );
 
-exports.aliasTopFour = (req, res, next) => {
+exports.aliasTopTours = (req, res, next) => {
   req.query.limit = '5';
   req.query.sort = '-ratingsAverage,price';
   req.query.fields = 'name, price, ratingsAverage,summary, difficulty';
   next();
 };
+
+class APIFeatures {
+  constructor()
+}
 
 //Routes
 exports.getAllTours = async (req, res) => {
