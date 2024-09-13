@@ -164,28 +164,39 @@ exports.deleteTour = async (req, res) => {
 
 exports.getTourStats = async (req, res) => {
   try {
+<<<<<<< HEAD
     const stats = await Tour.aggregate([
+=======
+    const stats = Tour.aggregate([
+>>>>>>> 9ac6833865b7c40fcc86f29d0518dd5232654918
       {
         $match: { ratingAverage: { $gte: 4.5 } }
       },
       {
         $group: {
+<<<<<<< HEAD
           _id: '$ratingsAverage',
           // _id: { $toUpper: '$difficulty' },
           // _id: '$difficulty', sorting the average according to thr difficuult
           num: { $sum: 1 },
           numRatings: { $sum: '$ratingQuantity' },
+=======
+          _id: null,
+>>>>>>> 9ac6833865b7c40fcc86f29d0518dd5232654918
           avgRating: { $avg: '$ratingsAverage' },
           avgPrice: { $avg: '$price' },
           minPrice: { $min: '$price' },
           maxPrice: { $min: '$price' }
         }
+<<<<<<< HEAD
       },
       {
         $sort: { avgPrice: 1 }
       },
       {
         $match: { _id: { $ne: 'EASY' } }
+=======
+>>>>>>> 9ac6833865b7c40fcc86f29d0518dd5232654918
       }
     ]);
 
@@ -201,6 +212,7 @@ exports.getTourStats = async (req, res) => {
       message: err
     });
   }
+<<<<<<< HEAD
 };
 
 //Getting monthly plans or by year
@@ -252,4 +264,6 @@ exports.getMonthlyPlan = async (req, res) => {
       message: err
     });
   }
+=======
+>>>>>>> 9ac6833865b7c40fcc86f29d0518dd5232654918
 };
