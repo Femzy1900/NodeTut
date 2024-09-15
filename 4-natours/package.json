@@ -15,12 +15,8 @@
     "express": "^4.19.2",
     "mongoose": "^5.13.22",
     "morgan": "^1.10.0",
-<<<<<<< HEAD
     "slugify": "^1.6.6",
     "validator": "^13.12.0"
-=======
-    "slugify": "^1.6.6"
->>>>>>> 9ac6833865b7c40fcc86f29d0518dd5232654918
   },
   "devDependencies": {
     "eslint": "^5.16.0",
