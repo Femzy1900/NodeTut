@@ -21,8 +21,19 @@ const userSchema = new mongoose.Schema({
   },
   passwordConfirm: {
     type: String,
-    required: [true, 'Please confirm your password']
+    required: [true, 'Please confirm your password'],
+    //This only work on CREATE and Save
+    validate: {
+      validator: function(el) {
+        return el === this.password;
+      },
+      message: 'Passwords are not the same'
+    }
   }
+});
+
+userSchema.pre('save', function(next) {
+  if (this.isModified('password')) return next();
 });
 
 const User = mongoose.model('User', userSchema);
