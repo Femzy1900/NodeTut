@@ -43,7 +43,7 @@ exports.login = catchAsync(async (req, res, next) => {
   }
 
   //if everything is ok, send to the client
-  const token = '';
+  const token = signToken(user._id);
   res.status().json({
     status: 'success',
     token
