@@ -119,6 +119,8 @@ exports.forgotPassword = async (res, req, next) => {
   }
 
   //Generate the random reset token
+  const resetToken = user.createPasswordResetToken();
+  await user.save({ validateBeforeSave: false });
 
   //Send it to the users email
 };
