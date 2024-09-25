@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
+const sendEmail = require('./../utils/email');
 
 const signToken = id => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -32,28 +33,25 @@ exports.signup = catchAsync(async (req, res) => {
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
-  //Check if password and email exist
-  if (!password || !email) {
+  // 1) Check if email and password exist
+  if (!email || !password) {
     return next(new AppError('Please provide email and password!', 400));
   }
-  // Check if user exist && password is correct
+  // 2) Check if user exists && password is correct
   const user = await User.findOne({ email }).select('+password');
 
   if (!user || !(await user.correctPassword(password, user.password))) {
-    return next(new AppError('Incorrect email or password ', 401));
+    return next(new AppError('Incorrect email or password', 401));
   }
-
   //if everything is ok, send to the client
   const token = signToken(user._id);
-  res.status().json({
+  res.status(200).json({
     status: 'success',
     token
   });
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
-  next();
-
   //Getting token and checking if it's there
   let token;
   if (
@@ -123,6 +121,9 @@ exports.forgotPassword = async (res, req, next) => {
   await user.save({ validateBeforeSave: false });
 
   //Send it to the users email
+  const resetURL = `${req.protocol}://${req.get(
+    'host'
+  )}/api/v1/users/resetPassword/${resetToken}`;
 };
 
 exports.resetPassword = (res, req, next) => {};
